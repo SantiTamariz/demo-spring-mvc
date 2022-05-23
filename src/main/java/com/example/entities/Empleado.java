@@ -34,5 +34,5 @@ public class Empleado implements Serializable{
    private Departamento departamento;
 
 
-
+   
 }
