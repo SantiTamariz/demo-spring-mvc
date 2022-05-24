@@ -19,7 +19,7 @@ public class MainController {
     @Autowired
     private EmpleadoService empleadoService;
 
-    //El metodo recibe un modelo del framework vacio 
+    //El metodo recibe un modelo del framework vacio, FUNCIONA PERO USAMOS EL SIGUIENTE
     //@GetMapping("/listar")
     public String listarEmpleadoMalo(Model model){
 
@@ -34,11 +34,14 @@ public class MainController {
     @GetMapping("/listar") 
     public ModelAndView listarEmpleado(){
 
+        String saludo = "Hola mundo";
+
         //Modelo nuevo asignado a la vista
         ModelAndView maw = new ModelAndView("listar");
 
         //Añadir al modelo del atributo empleados cogidos los datos del servicio
-        maw.addObject("empledos", empleadoService.findAll());
+        maw.addObject("empleados", empleadoService.findAll());
+        maw.addObject("saludo", saludo);
 
         //Retornar modelo a la vista
         return maw;
