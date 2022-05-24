@@ -20,7 +20,7 @@ public class MainController {
     private EmpleadoService empleadoService;
 
     //El metodo recibe un modelo del framework vacio 
-    @GetMapping("/listar")
+    //@GetMapping("/listar")
     public String listarEmpleadoMalo(Model model){
 
         //Método añade los datos al modelo pidiendolos al servicio por el atributo empleados
@@ -30,7 +30,8 @@ public class MainController {
         return "listar";
     }
     
-    //Crear un modelo 
+    //Crear un modelo
+    @GetMapping("/listar") 
     public ModelAndView listarEmpleado(){
 
         //Modelo nuevo asignado a la vista
