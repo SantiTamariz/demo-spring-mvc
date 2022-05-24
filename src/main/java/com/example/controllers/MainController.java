@@ -1,11 +1,13 @@
 package com.example.controllers;
 
+import com.example.entities.Empleado;
 import com.example.services.EmpleadoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,5 +47,25 @@ public class MainController {
 
         //Retornar modelo a la vista
         return maw;
+    }
+
+    //Devuelve detalles empleado, definir idEmpleado y convertirlo con @PathVariable
+    @GetMapping("/detalle/{idEmpleado}")
+    public String detalleEmpleado(@PathVariable(name = "idEmpleado") Long idEmpleado, Model model){
+
+        //Método que añade los datos al modelo pidiendolos al servicio
+        model.addAttribute("empleado", empleadoService.findByIdEmpleado(idEmpleado));
+
+        //Manda a la vista detalle.html los datos
+        return "detalle";
+    }
+
+    @GetMapping("/alta")
+    public String mostrarFormulario(Model model){
+
+        //Pasar un empleado vacio
+        model.addAttribute("empleado", new Empleado());
+
+        return "altaEmpleado";
     }
 }

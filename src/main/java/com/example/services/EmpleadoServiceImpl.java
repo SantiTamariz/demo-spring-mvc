@@ -31,5 +31,11 @@ public class EmpleadoServiceImpl implements EmpleadoService{
     public List<Empleado> findAll() {
         return this.empleadoDao.findAll();
     }
+
+    //Recibe un tipo opcional y con .get lo transformamos en tipo Empleado
+    @Override
+    public Empleado findByIdEmpleado(Long id) {
+        return empleadoDao.findById(id).get();
+    }
     
 }
