@@ -11,7 +11,6 @@
     <!-- <p th:text="${saludo}"></p> -->
 
     <h1>Listado de empleados</h1>
-    <h3><a th:href="@{/alta}">Alta Empleado</a></h3>
     <table>
         <thead>
             <tr>
@@ -31,6 +30,9 @@
         </tbody>
 
     </table>
+    <div>
+        <a th:href="@{/alta}">Alta Empleado</a>
+    </div>
     
 </body>
 </html>

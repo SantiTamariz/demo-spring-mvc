@@ -1,13 +1,18 @@
 package com.example.controllers;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import com.example.entities.Empleado;
+import com.example.services.DepartamentoService;
 import com.example.services.EmpleadoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +25,9 @@ public class MainController {
     //Así solo lo instancia cuando es necesario y lo usa SpringBoot
     @Autowired
     private EmpleadoService empleadoService;
+
+    @Autowired
+    private DepartamentoService departamentoService;
 
     //El metodo recibe un modelo del framework vacio, FUNCIONA PERO USAMOS EL SIGUIENTE
     //@GetMapping("/listar")
@@ -60,12 +68,26 @@ public class MainController {
         return "detalle";
     }
 
+    //Método muestra el fomrulario y pasa un empleado vacio para rellenar
     @GetMapping("/alta")
     public String mostrarFormulario(Model model){
 
         //Pasar un empleado vacio
         model.addAttribute("empleado", new Empleado());
 
+        //Pasar la lista de departamentos
+        model.addAttribute("departamentos", departamentoService.findAll());
+
         return "altaEmpleado";
     }
+
+    //Método recoge los datos del nuevo empleado
+    @PostMapping("/guardar")
+    public String guardarEmpleado(@ModelAttribute(name = "empleado") Empleado empleado){
+
+        empleadoService.guardarEmpleado(empleado);
+        return "redirect:/listar";
+
+    }
+    
 }

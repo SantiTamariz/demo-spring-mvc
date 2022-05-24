@@ -37,5 +37,10 @@ public class EmpleadoServiceImpl implements EmpleadoService{
     public Empleado findByIdEmpleado(Long id) {
         return empleadoDao.findById(id).get();
     }
+
+    @Override
+    public void guardarEmpleado(Empleado empleado) {
+        empleadoDao.save(empleado);        
+    }
     
 }
