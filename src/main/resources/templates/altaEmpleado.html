@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
 </head>
+
 <body>
-    <h1>Formulario de alta Empleado</h1>
+        <h1>Formulario Empleado</h1>
 
-    <form th:action="@{/guardar}" method="post" th:object="${empleado}">
-        <input type="text" placeholder="Nombre: " th:field="*{Nombre}">
-        <input type="text" placeholder="Primer apellido: " th:field="*{PrimerApellido}"> 
-        <input type="text" placeholder="Segundo apellido: " th:field="*{SegundoApellido}"> 
-        <input type="text" placeholder="Salario: " th:field="*{Salario}">
+        <form th:action="@{/guardar/} + ${empleado.Id}" method="post" th:object="${empleado}">
+                <input type="text" placeholder="Nombre: " th:field="*{Nombre}">
+                <input type="text" placeholder="Primer apellido: " th:field="*{PrimerApellido}">
+                <input type="text" placeholder="Segundo apellido: " th:field="*{SegundoApellido}">
+                <input type="text" placeholder="Salario: " th:field="*{Salario}">
 
-        <select th:field="*{departamento}">
-                <option th:each=" departamento : ${departamentos}" 
-                    th:value="${departamento.Id}" 
-                        th:text="${departamento.Nombre}"></option>
-        </select>
+                <select name="departamento">
+                        <option th:each=" departamento : ${departamentos}" th:value="${departamento.Id}"
+                                th:text="${departamento.Nombre}" th:selected="${empleado.Id !=null ? (empleado.departamento.Id == departamento.Id) :null}"></option>
+                </select>
 
-        <input type="submit">
+                <input type="submit">
 
-    </form>
+        </form>
 
 </body>
+
 </html>

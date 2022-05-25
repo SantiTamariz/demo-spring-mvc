@@ -17,6 +17,7 @@
                 <th>Nombre</th>
                 <th>Salario</th>
                 <th>Detalle</th>
+                <th>Modificar</th>
             </tr>
 
         </thead>
@@ -25,6 +26,7 @@
                 <td th:text="${empleado.Nombre}"></td>
                 <td th:text="${empleado.Salario}"></td>
                 <td><a th:href="@{/detalle/} + ${empleado.Id}">Detalle</a></td>
+                <td><a th:href="@{/alta/} + ${empleado.Id}">Modificar</a></td>
             </tr>
 
         </tbody>

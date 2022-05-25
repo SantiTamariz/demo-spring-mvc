@@ -69,8 +69,22 @@ public class MainController {
     }
 
     //Método muestra el fomrulario y pasa un empleado vacio para rellenar
+    @GetMapping("/alta/{idEmpleado}")
+    public String mostrarFormulario(@PathVariable(name = "idEmpleado") Long idEmpleado, Model model){
+
+        //Construir un empleado con sus datos con el id
+        model.addAttribute("empleado", empleadoService.findByIdEmpleado(idEmpleado));
+
+        //Pasar la lista de departamentos
+        model.addAttribute("departamentos", departamentoService.findAll());
+
+        return "altaEmpleado";
+
+    }
+
+    //Método muestra el fomrulario y pasa un empleado vacio para rellenar
     @GetMapping("/alta")
-    public String mostrarFormulario(Model model){
+    public String mostrarFormularioVacio(Model model){
 
         //Pasar un empleado vacio
         model.addAttribute("empleado", new Empleado());
@@ -79,7 +93,9 @@ public class MainController {
         model.addAttribute("departamentos", departamentoService.findAll());
 
         return "altaEmpleado";
-    }
+
+
+        }
 
     //Método recoge los datos del nuevo empleado
     @PostMapping("/guardar")
