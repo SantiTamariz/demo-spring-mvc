@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head th:insert="base :: cabecera">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +11,27 @@
 <body>
         <h1>Formulario Empleado</h1>
 
-        <form th:action="@{/guardar/} + ${empleado.Id}" method="post" th:object="${empleado}">
+        <form th:action="@{/guardar}" method="post" th:object="${empleado}" enctype="multipart/form-data">
                 <input type="text" placeholder="Nombre: " th:field="*{Nombre}">
                 <input type="text" placeholder="Primer apellido: " th:field="*{PrimerApellido}">
                 <input type="text" placeholder="Segundo apellido: " th:field="*{SegundoApellido}">
                 <input type="text" placeholder="Salario: " th:field="*{Salario}">
 
-                <select name="departamento">
+                <select name="departamento" class="form-select">
+                        <option value="0"></option>
                         <option th:each=" departamento : ${departamentos}" th:value="${departamento.Id}"
-                                th:text="${departamento.Nombre}" th:selected="${empleado.Id !=null ? (empleado.departamento.Id == departamento.Id) :null}"></option>
+                                th:text="${departamento.Nombre}" 
+                                th:selected="${empleado.Id !=null ? (empleado.departamento == departamento) :null}">
+                                
+                        </option>
                 </select>
 
                 <input type="submit">
 
+                <input type="hidden" th:field="*{id}">
         </form>
+        
+        <script th:replace="base :: scripts"></script>
 
 </body>
 

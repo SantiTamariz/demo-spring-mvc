@@ -34,7 +34,7 @@ public class Empleado implements Serializable{
    
    private Double salario;
 
-   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
    private Departamento departamento;
 
 

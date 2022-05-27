@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head th:insert="base :: cabecera">
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,32 +10,39 @@
 </head>
 <body>
     <!-- <p th:text="${saludo}"></p> -->
+    
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Listado de empleado</h1>
+            <a class="btn btn-primary w-50 m-auto" role="button" th:href="@{/alta/}+${0}">Alta Empleado</a>
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Primer Apellido</th>
+                        <th scope="col">Segundo Apellido</th>
+                        <th scope="col">Salario</th>
+                        <th scope="col">Detalles</th>
+                        <th scope="col">Modificar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="empleado : ${empleados}">
+                        <td th:text="${empleado.Nombre}"></td>
+                        <td th:text="${empleado.PrimerApellido}"></td>
+                        <td th:text="${empleado.SegundoApellido}"></td>
+                        <td th:text="${empleado.Salario}"></td>
 
-    <h1>Listado de empleados</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Salario</th>
-                <th>Detalle</th>
-                <th>Modificar</th>
-            </tr>
+                        <td><a th:href="@{/detalle/} + ${empleado.Id}">Detalle</a></td>
+                        <td><a th:href="@{/alta/} + ${empleado.Id}">Modificar</a></td>
 
-        </thead>
-        <tbody>
-            <tr th:each="empleado : ${empleados}">
-                <td th:text="${empleado.Nombre}"></td>
-                <td th:text="${empleado.Salario}"></td>
-                <td><a th:href="@{/detalle/} + ${empleado.Id}">Detalle</a></td>
-                <td><a th:href="@{/alta/} + ${empleado.Id}">Modificar</a></td>
-            </tr>
-
-        </tbody>
-
-    </table>
-    <div>
-        <a th:href="@{/alta}">Alta Empleado</a>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <script th:replace="base :: scripts"></script>
     
 </body>
 </html>

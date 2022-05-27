@@ -70,33 +70,25 @@ public class MainController {
 
     //Método muestra el fomrulario y pasa un empleado vacio para rellenar
     @GetMapping("/alta/{idEmpleado}")
-    public String mostrarFormulario(@PathVariable(name = "idEmpleado") Long idEmpleado, Model model){
-
-        //Construir un empleado con sus datos con el id
-        model.addAttribute("empleado", empleadoService.findByIdEmpleado(idEmpleado));
-
-        //Pasar la lista de departamentos
+    public String mostrarFormulario(Model model, @PathVariable(name = "idEmpleado", required = false) Long idEmpleado){
+    
+    	if(idEmpleado!=0){
+    		//Alta
+    		//Construir un empleado con sus datos con el id
+        	model.addAttribute("empleado", empleadoService.findByIdEmpleado(idEmpleado));
+    		
+    	}
+	   else{
+		    //Pasar un empleado vacio
+        	model.addAttribute("empleado", new Empleado());
+	    }
+	    //Pasar la lista de departamentos
         model.addAttribute("departamentos", departamentoService.findAll());
-
+        
         return "altaEmpleado";
 
     }
-
-    //Método muestra el fomrulario y pasa un empleado vacio para rellenar
-    @GetMapping("/alta")
-    public String mostrarFormularioVacio(Model model){
-
-        //Pasar un empleado vacio
-        model.addAttribute("empleado", new Empleado());
-
-        //Pasar la lista de departamentos
-        model.addAttribute("departamentos", departamentoService.findAll());
-
-        return "altaEmpleado";
-
-
-        }
-
+    
     //Método recoge los datos del nuevo empleado
     @PostMapping("/guardar")
     public String guardarEmpleado(@ModelAttribute(name = "empleado") Empleado empleado){
