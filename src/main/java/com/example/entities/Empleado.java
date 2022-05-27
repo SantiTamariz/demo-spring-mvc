@@ -37,6 +37,8 @@ public class Empleado implements Serializable{
    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
    private Departamento departamento;
 
+   private String foto;
+
 
    
 }

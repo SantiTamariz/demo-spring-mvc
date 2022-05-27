@@ -9,7 +9,7 @@
 </head>
 
 <body>
-        <h1>Formulario Empleado</h1>
+        <!-- <h1>Formulario Empleado</h1>
 
         <form th:action="@{/guardar}" method="post" th:object="${empleado}" enctype="multipart/form-data">
                 <input type="text" placeholder="Nombre: " th:field="*{Nombre}">
@@ -29,9 +29,84 @@
                 <input type="submit">
 
                 <input type="hidden" th:field="*{id}">
-        </form>
+        </form> -->
+        <div class="container-fluid">
+                <div class="row">
+                    <h1>Formulario de Empleado</h1>
+                    <form th:action="@{/guardar}" th:object="${empleado}" method="post" enctype="multipart/form-data">
+        
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label" >Nombre</label>
+                            <input type="text" class="form-control" th:field="*{Nombre}">
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="primerApellido" class="form-label" >Primer Apellido</label>
+                            <input type="text" class="form-control" th:field="*{PrimerApellido}">
+                        </div>
+
+                        <div class="mb-3">
+                                <label for="segundoApellido" class="form-label" >Segundo Apellido</label>
+                                <input type="text" class="form-control" th:field="*{SegundoApellido}">
+                        </div>
+
+                        <div class="mb-3">
+                                <label for="salario" class="form-label" >Salario</label>
+                                <input type="text" class="form-control" th:field="*{Salario}">
+                        </div>
+        
+                        <div class="mb-3">
+                            <label for="foto" class="form-label" name="foto">Fotografia</label>
+                            <input type="file" class="form-control" name="file" id="file">
+                            <img th:src="${empleado.id !=0} ? @{/imagenes/} + ${empleado.Foto}: ''" id="foto" alt="No tiene foto">
+                            <!-- JavaScript para que al pulsar el boton se actualice la pagina, refresque la imagen -->
+                            <!-- y apunte a la carpeta -->
+
+                            
+                        </div> 
+        
+                        <div class="mb-3">
+                            <label for="disabledSelect" class="form-label">Departamento:</label>
+                            <select name="departamento" class="form-select">
+                                <option value="0"></option>
+                                <option th:each=" departamento : ${departamentos}" th:value="${departamento.Id}"
+                                        th:text="${departamento.Nombre}" 
+                                        th:selected="${empleado.Id !=null ? (empleado.departamento == departamento) :null}">
+                                        
+                                </option>
+                                </select>
+        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{foto}">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+        
+        
+        
+        
+            </div>
         
         <script th:replace="base :: scripts"></script>
+
+        <script>
+
+                var img1 = document.getElementById("foto");
+
+                var file1 = document.getElementById("file");
+
+                //Cuando el archivo file que es el subido se mofidica
+                //Salta un evento del tipo "change" que sustituye la ruta de la imagen de antes
+                //Y pone la ruta de la imagen con el nuevo archivo
+                file1.addEventListener("change",  ()=>{
+                        img1.src="/imagenes/" + file1.files[0].name;
+
+                } )
+        </script>
 
 </body>
 

@@ -1,6 +1,9 @@
 package com.example.controllers;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.example.entities.Empleado;
 import com.example.services.DepartamentoService;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -88,14 +93,46 @@ public class MainController {
         return "altaEmpleado";
 
     }
-    
-    //Método recoge los datos del nuevo empleado
+
+    //Para guardar imagenes en static
+    //Persona que se rellena en el formulario @ModelAttribute un atributo del modelo
+    //El file del formulario con @RequestParam del cuerpo de la petición
+    //@Pathvariable para recoger un parametro de la URL 
     @PostMapping("/guardar")
-    public String guardarEmpleado(@ModelAttribute(name = "empleado") Empleado empleado){
+    public String guardarenStatic(@ModelAttribute(name = "empleado")Empleado empleado, 
+                            @RequestParam(name = "file") MultipartFile file){
 
-        empleadoService.guardarEmpleado(empleado);
+
+        //Si la imagen no viene vacia tengo que procesarla
+        if(!file.isEmpty()){
+            //Ruta a la carpeta static/imagenes, donde por defecto se almacenan los archivos
+            Path rutaRelativa = Paths.get("src/main/resources/static/imagenes");
+
+            //Ruta absoluta sería 
+            String rutaAbsoluta = rutaRelativa.toFile().getAbsolutePath();
+
+            try {
+                //Imagen convertida en un array de bytes
+                byte[] imagenBytes = file.getBytes();
+
+                //Concatenar ruta absoluta + // + nombre de la imagen
+                Path rutaCompleta = Paths.get(rutaAbsoluta +  "//" + file.getOriginalFilename());
+
+                //Escribir archivo en la ruta
+                Files.write(rutaCompleta, imagenBytes);
+
+                //Añadir foto a la persona
+                empleado.setFoto(file.getOriginalFilename());
+
+                empleadoService.guardarEmpleado(empleado);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         return "redirect:/listar";
-
     }
+
     
 }
